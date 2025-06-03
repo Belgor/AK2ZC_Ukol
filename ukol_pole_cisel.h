@@ -10,4 +10,7 @@ double calculateAverage(int arr[], int length);
 // Funkce pro hledání maximálního a minimálního čísla v poli
 void findMinMax(int arr[], int length, int *max, int *min);
 
+// Pomocná funkce pro tisk pole čísel
+void printArray(int pole_cisel[], int length);
+
 #endif // UKOL_POLE_H

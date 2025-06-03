@@ -4,18 +4,6 @@
 
 #define MAX_SIZE 100 // Maximální povolená velikost pole čísel
 
-// Pomocná funkce pro tisk pole čísel
-void printArray(int pole_cisel[], int length) {
-    printf("{");
-    for (int i = 0; i < length; i++) {
-        printf("%d", pole_cisel[i]);
-        if (i < length - 1) {
-            printf(", ");
-        }
-    }
-    printf("}\n");
-}
-
 int main() {
     int length;
     char again;

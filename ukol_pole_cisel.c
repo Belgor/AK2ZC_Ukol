@@ -1,6 +1,18 @@
-#include "ukol_pole.h"
+#include "ukol_pole_cisel.h"
 #include <stdio.h> // Pro případné ladění nebo budoucí rozšíření, i když pro tyto funkce není striktně nutné
 #include <limits.h> // Pro INT_MAX a INT_MIN
+
+// Pomocná funkce pro tisk pole čísel
+void printArray(int pole_cisel[], int length) {
+    printf("{");
+    for (int i = 0; i < length; i++) {
+        printf("%d", pole_cisel[i]);
+        if (i < length - 1) {
+            printf(", ");
+        }
+    }
+    printf("}\n");
+}
 
 // Funkce pro otočení pořadí čísel v poli
 void reverseArray(int arr[], int length) {
