@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h> // Pro malloc a free
-#include "ukol_pole.h"
+#include "ukol_pole_cisel.h"
 
-#define MAX_ARRAY_SIZE 100 // Maximální povolená velikost pole
+#define MAX_SIZE 100 // Maximální povolená velikost pole čísel
 
-// Pomocná funkce pro tisk pole
-void printArray(int arr[], int length) {
+// Pomocná funkce pro tisk pole čísel
+void printArray(int pole_cisel[], int length) {
     printf("{");
     for (int i = 0; i < length; i++) {
-        printf("%d", arr[i]);
+        printf("%d", pole_cisel[i]);
         if (i < length - 1) {
             printf(", ");
         }
@@ -21,14 +21,27 @@ int main() {
     char again;
 
     do {
-        printf("Zadejte delku pole (max %d): ", MAX_ARRAY_SIZE);
-        if (scanf("%d", &length) != 1 || length <= 0 || length > MAX_ARRAY_SIZE) {
-            printf("Neplatna delka pole. Program bude ukoncen.\n");
-            return 1; // Ukončí program, pokud je délka neplatná
-        }
+        int valid_length = 0; // Pomocná proměnná pro kontrolu platné délky
+        do {
+            printf("Zadejte delku pole cisel (max %d): ", MAX_SIZE);
+            // Vyčistíme vstupní buffer před čtením čísla
+            while ((getchar()) != '\n'); 
+            if (scanf("%d", &length) != 1 || length <= 0 || length > MAX_SIZE) {
+                printf("Spatne zadana delka pole cisel. Musi byt cislo od 1 do %d.\n", MAX_SIZE);
+                printf("Chcete zkusit zadat delku znovu (A) nebo ukoncit program (N)? ");
+                char retry_choice;
+                while ((getchar()) != '\n'); // Vyčistíme buffer
+                scanf(" %c", &retry_choice);
+                if (retry_choice != 'a' && retry_choice != 'A') {
+                    return 0; // Ukončí program, pokud uživatel nechce zkusit znovu
+                }
+            } else {
+                valid_length = 1; // Délka je platná, můžeme pokračovat
+            }
+        } while (!valid_length); // Opakujeme, dokud nezískáme platnou délku
 
-        int *arr = (int *)malloc(length * sizeof(int));
-        if (arr == NULL) {
+        int *pole_cisel = (int *)malloc(length * sizeof(int));
+        if (pole_cisel == NULL) {
             printf("Chyba alokace pameti.\n");
             return 1;
         }
@@ -36,49 +49,49 @@ int main() {
         printf("Zadejte %d cela cisla:\n", length);
         for (int i = 0; i < length; i++) {
             printf("Zadejte cislo %d: ", i + 1);
-            if (scanf("%d", &arr[i]) != 1) {
-                printf("Neplatny vstup. Zadejte cele cislo.\n");
-                free(arr);
-                return 1;
+            if (scanf("%d", &pole_cisel[i]) != 1) {
+                printf("Neplatny vstup. Zadejte prosim cele cislo.\n");
+                free(pole_cisel);
+                return 1; 
             }
         }
 
-        printf("\nPuvodni pole: ");
-        printArray(arr, length);
+        printf("\nPuvodni pole cisel: ");
+        printArray(pole_cisel, length);
 
-        // Demonstrace funkce pro otočení pole
-        int *reversed_arr = (int *)malloc(length * sizeof(int));
-        if (reversed_arr == NULL) {
-            printf("Chyba alokace pameti pro obracene pole.\n");
-            free(arr);
+        // Demonstrace funkce pro otočení pole čísel
+        int *reversed_pole_cisel = (int *)malloc(length * sizeof(int));
+        if (reversed_pole_cisel == NULL) {
+            printf("Chyba alokace pameti pro obracene pole cisel.\n");
+            free(pole_cisel);
             return 1;
         }
-        // Zkopírujeme původní pole, abychom mohli demonstrovat otočení bez změny originálu
+        // Zkopírujeme původní pole čísel, abychom mohli demonstrovat otočení bez změny originálu
         for (int i = 0; i < length; i++) {
-            reversed_arr[i] = arr[i];
+            reversed_pole_cisel[i] = pole_cisel[i];
         }
-        reverseArray(reversed_arr, length);
-        printf("Obracene pole: ");
-        printArray(reversed_arr, length);
-        free(reversed_arr);
+        reverseArray(reversed_pole_cisel, length);
+        printf("Obracene pole_cisel: ");
+        printArray(reversed_pole_cisel, length);
+        free(reversed_pole_cisel);
 
         // Demonstrace funkce pro průměr
-        double average = calculateAverage(arr, length);
-        printf("Prumerna hodnota pole: %.2f\n", average);
+        double average = calculateAverage(pole_cisel, length);
+        printf("Prumerna hodnota pole cisel: %.2f\n", average);
 
         // Demonstrace funkce pro min/max
         int max_val, min_val;
-        findMinMax(arr, length, &max_val, &min_val);
+        findMinMax(pole_cisel, length, &max_val, &min_val);
         printf("Maximalni hodnota v poli: %d\n", max_val);
         printf("Minimalni hodnota v poli: %d\n", min_val);
 
-        free(arr); // Uvolnění alokované paměti
+        free(pole_cisel);
 
-        printf("\nChcete zadat nove pole a spustit program znovu? (A/N): ");
+        printf("\nChcete opakovat s novým polem cisel? (A/N): ");
         // Vyčistíme vstupní buffer před čtením znaku
         while ((getchar()) != '\n'); 
         scanf(" %c", &again); // Mezera před %c ignoruje bílé znaky (včetně nového řádku)
-    } while (again == 'a' || again == 'A');
+    } while (again == 'a' || again == 'A'); // Opakuje program, pokud uživatel zadá 'A' nebo 'a'
 
     return 0;
 }
