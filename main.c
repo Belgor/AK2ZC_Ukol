@@ -12,8 +12,11 @@ int main() {
         int valid_length = 0; // Pomocná proměnná pro kontrolu platné délky
         do {
             printf("Zadejte delku pole cisel (max %d): ", MAX_SIZE);
-            // Vyčistíme vstupní buffer před čtením čísla
-            while ((getchar()) != '\n'); 
+            // Pokud se program opakuje vyčistíme vstupní buffer
+            if (again == 'a' || again == 'A')
+            {
+                while ((getchar()) != '\n');
+            }
             if (scanf("%d", &length) != 1 || length <= 0 || length > MAX_SIZE) {
                 printf("Spatne zadana delka pole cisel. Musi byt cislo od 1 do %d.\n", MAX_SIZE);
                 printf("Chcete zkusit zadat delku znovu (A) nebo ukoncit program (N)? ");
@@ -47,14 +50,14 @@ int main() {
         printf("\nPuvodni pole cisel: ");
         printArray(pole_cisel, length);
 
-        // Demonstrace funkce pro otočení pole čísel
+        // Funkce pro otočení pole čísel
         int *reversed_pole_cisel = (int *)malloc(length * sizeof(int));
         if (reversed_pole_cisel == NULL) {
             printf("Chyba alokace pameti pro obracene pole cisel.\n");
             free(pole_cisel);
             return 1;
         }
-        // Zkopírujeme původní pole čísel, abychom mohli demonstrovat otočení bez změny originálu
+        // Zkopírujeme původní pole čísel, abychom mohli demonstrovat otočit bez změny originálu
         for (int i = 0; i < length; i++) {
             reversed_pole_cisel[i] = pole_cisel[i];
         }
@@ -63,11 +66,11 @@ int main() {
         printArray(reversed_pole_cisel, length);
         free(reversed_pole_cisel);
 
-        // Demonstrace funkce pro průměr
+        // Funkce pro průměr
         double average = calculateAverage(pole_cisel, length);
         printf("Prumerna hodnota pole cisel: %.2f\n", average);
 
-        // Demonstrace funkce pro min/max
+        // Funkce pro min/max
         int max_val, min_val;
         findMinMax(pole_cisel, length, &max_val, &min_val);
         printf("Maximalni hodnota v poli: %d\n", max_val);
@@ -75,7 +78,7 @@ int main() {
 
         free(pole_cisel);
 
-        printf("\nChcete opakovat s novým polem cisel? (A/N): ");
+        printf("\nChcete opakovat s novym polem cisel? (A/N): ");
         // Vyčistíme vstupní buffer před čtením znaku
         while ((getchar()) != '\n'); 
         scanf(" %c", &again); // Mezera před %c ignoruje bílé znaky (včetně nového řádku)

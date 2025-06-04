@@ -1,5 +1,5 @@
 #include "ukol_pole_cisel.h"
-#include <stdio.h> // Pro případné ladění nebo budoucí rozšíření, i když pro tyto funkce není striktně nutné
+#include <stdio.h>
 #include <limits.h> // Pro INT_MAX a INT_MIN
 
 // Pomocná funkce pro tisk pole čísel
@@ -42,8 +42,8 @@ double calculateAverage(int arr[], int length) {
 // Funkce pro hledání maximálního a minimálního čísla v poli
 void findMinMax(int arr[], int length, int *max, int *min) {
     if (length == 0) {
-        *max = 0; // Nebo jiná vhodná výchozí hodnota, např. INT_MIN
-        *min = 0; // Nebo jiná vhodná výchozí hodnota, např. INT_MAX
+        *max = 0;
+        *min = 0;
         return;
     }
 
